@@ -1,0 +1,39 @@
+#服务配置
+server:
+  host: localhost
+  port: 8761
+
+#Spring配置
+spring:
+  application:
+    name: eureka-server-1
+
+#Eureka配置
+eureka:
+  instance:
+    hostname: eureka-server-1
+    prefer-ip-address: true
+    instance-id: ${server.host}:${server.port}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${server.host}:8762/eureka/
+
+#Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+#Lomkok配置
+logging:
+  level:
+    root: error
+    com.cn.web: debug

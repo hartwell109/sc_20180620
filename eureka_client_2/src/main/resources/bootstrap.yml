@@ -1,0 +1,62 @@
+#server配置
+server:
+  host: localhost
+  port: 8082
+
+#Spring配置
+spring:
+  application:
+    name: eureka-client
+  cloud:
+    config:
+      uri: http://localhost:8763
+      fail-fast: true
+
+
+  #datasource配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sc_mysql?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    username: root
+    password: admin
+    time-between-eviction-runs-millis: 3600000
+
+  #JPA配置
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+#Eureka配置
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${server.host}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka
+      #,http://localhost:8762/eureka
+
+#Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+#Lombok配置
+logging:
+  level:
+    root: error
+    com.cn.web: debug
+
+#自定义配置
+my:
+  name: eureka-client-2
+  uuid: ${random.uuid}

@@ -1,0 +1,39 @@
+#Spring≈‰÷√
+spring:
+  application:
+    name: eureka-server-2
+
+#∑˛ŒÒ≈‰÷√
+server:
+  host: localhost
+  port: 8762
+
+#Eureka≈‰÷√
+eureka:
+  instance:
+    hostname: eureka-server-2
+    prefer-ip-address: true
+    instance-id: ${server.host}:${server.port}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${server.host}:8761/eureka/
+
+#Actuator≈‰÷√
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+#»’÷æ≈‰÷√
+logging:
+  level:
+    root: error
+    com.cn.web: debug

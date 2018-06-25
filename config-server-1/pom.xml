@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cn</groupId>
-	<artifactId>eureka_server_1</artifactId>
+	<artifactId>config-server-1</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>eureka_server_1</name>
+	<name>config-server-1</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -32,7 +32,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
 
 		<dependency>

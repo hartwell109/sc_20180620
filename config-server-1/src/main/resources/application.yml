@@ -1,0 +1,44 @@
+#Server配置
+server:
+  host: localhost
+  port: 8763
+
+#Spring配置
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+    active: native
+  application:
+    name: config-server-1
+
+#Eureka配置
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${server.host}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka
+
+#Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+#Lombok配置
+logging:
+  level:
+    root: error
+    com.cn.web: debug
+
