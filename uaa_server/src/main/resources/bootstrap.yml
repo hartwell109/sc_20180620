@@ -1,13 +1,13 @@
 #服务配置
 server:
   host: localhost
-  port: 8081
+  port: 8083
 
 #Spring配置
 spring:
   #application配置
   application:
-    name: eureka-client
+    name: uaa-oauth2
 
   #cloud配置
   cloud:
@@ -20,7 +20,7 @@ spring:
   #datasource配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sc_mysql?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    url: jdbc:mysql://localhost:3306/uaa_oauth2?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
     username: root
     password: admin
     time-between-eviction-runs-millis: 3600000

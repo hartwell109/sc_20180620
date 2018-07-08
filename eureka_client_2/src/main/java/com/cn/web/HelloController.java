@@ -19,7 +19,7 @@ public class HelloController {
     @Value("${foo}")
     private String foo;
 
-    @GetMapping("/hi")
+    @GetMapping(value = "/hi", produces = "application/txt")
     public String hello() {
         String result = "\nhostname=" + this.hostname + "\nUUID=" + this.uuid + "\nfoo=" + this.foo;
         log.debug(result);

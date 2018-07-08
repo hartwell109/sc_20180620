@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @Slf4j
-
 @RestController
 @RequestMapping("/userbase")
 public class UserBaseController {
     @Autowired
     private UserBaseDao userBaseDao;
 
-    @GetMapping("/findbyusername/{username}")
+    @GetMapping(value = "/findbyusername/{username}", produces = "application/txt")
     public UserBase findByUsername(@PathVariable(name = "username") String username) {
         UserBase userBase = userBaseDao.findByUsername(username);
         log.debug("username={}", username);
@@ -31,8 +30,8 @@ public class UserBaseController {
         return userBase;
     }
 
-    @GetMapping("/findall")
-    public Page<UserBase> findbynocriteria(@PageableDefault(value = 5, size = 1, sort = {"userId"}, direction = Sort.Direction.ASC) Pageable pageable) {
+    @GetMapping(value = "/findall")
+    public Page<UserBase> findbynocriteria(@PageableDefault(value = 5, size = 5, sort = {"userId"}, direction = Sort.Direction.ASC) Pageable pageable) {
         Page<UserBase> result = userBaseDao.findAll(pageable);
         return result;
     }

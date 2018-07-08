@@ -2,6 +2,7 @@ package com.cn.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/hello")
+@RefreshScope
 public class HelloController {
     @Value("${my.name}")
     private String hostname;
@@ -19,7 +21,7 @@ public class HelloController {
     @Value("${foo}")
     private String foo;
 
-    @GetMapping("/hi")
+    @GetMapping(value = "/hi",produces = "application/txt")
     public String hello() {
         String result = "\nhostname=" + this.hostname + "\nUUID=" + this.uuid + "\nfoo=" + this.foo;
         log.debug(result);
