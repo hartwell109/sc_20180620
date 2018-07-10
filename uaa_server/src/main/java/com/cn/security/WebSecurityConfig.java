@@ -1,29 +1,46 @@
 package com.cn.security;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
+import javax.annotation.Resource;
+
+@Configuration
+@EnableAuthorizationServer
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Resource
+    private com.cn.service.UserDetailsService userDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
-    }
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(new MyPasswordEncoder());
 
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return super.userDetailsServiceBean();
-    }
-
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        //设置登录,注销，表单登录和Actuator不用拦截，其他请求要拦截
+        http.authorizeRequests().antMatchers("/", "/actuator/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .logout().permitAll()
+                .and()
+                .formLogin();
+        //关闭默认的csrf认证
+        http.csrf().disable();
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

@@ -1,13 +1,12 @@
 package com.cn.jpa.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -115,11 +114,11 @@ public class User implements org.springframework.security.core.userdetails.UserD
     }
 
     @Override
-    public Collection<Role> getAuthorities() {
+    public List<Role> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Collection<Role> authorities) {
+    public void setAuthorities(List<Role> authorities) {
         this.authorities = authorities;
     }
 
@@ -127,7 +126,7 @@ public class User implements org.springframework.security.core.userdetails.UserD
     @Type(type = "java.util.Date")
     private Date createDate = new Date();
 
-    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "authorityId", referencedColumnName = "authorityId"))
-    private Collection<Role> authorities;
+    private List<Role> authorities = new ArrayList<Role>();
 }
