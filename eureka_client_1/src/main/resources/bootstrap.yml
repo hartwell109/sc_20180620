@@ -23,7 +23,6 @@ spring:
     url: jdbc:mysql://localhost:3306/sc_mysql?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
     username: root
     password: admin
-    time-between-eviction-runs-millis: 3600000
 
   #JPA配置
   jpa:
@@ -35,7 +34,7 @@ spring:
   #rabbitmq配置
   rabbitmq:
     host: localhost
-    port: 5672
+    port: 15672
     username: admin
     password: admin
 
@@ -47,18 +46,13 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-      #,http://localhost:8762/eureka
 
 #Actuator配置
 management:
-  security:
-    enabled: false
-
   endpoints:
     web:
       exposure:
         include: "*"
-
   endpoint:
     shutdown:
       enabled: true
@@ -70,6 +64,7 @@ logging:
   level:
     root: error
     com.cn.web: debug
+
 
 #自定义配置量
 my:

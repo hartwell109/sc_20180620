@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.UUID;
 
 @Slf4j
 @RestController
 @RequestMapping("/userbase")
 public class UserBaseController {
-    @Autowired
-    private UserBaseDao userBaseDao;
+    @Resource
+    public UserBaseDao userBaseDao;
 
     @GetMapping(value = "/findbyusername/{username}", produces = "application/txt")
     public UserBase findByUsername(@PathVariable(name = "username") String username) {

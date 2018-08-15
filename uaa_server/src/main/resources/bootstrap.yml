@@ -1,15 +1,14 @@
-#服务配置
+#Server Configuration
 server:
   host: localhost
   port: 8083
 
-#Spring配置
+#Spring  Configuration
 spring:
-  #application配置
   application:
     name: uaa-oauth2
 
-  #cloud配置
+  #cloud  Configuration
   cloud:
     config:
       fail-fast: true
@@ -17,7 +16,7 @@ spring:
         enabled: true
         serviceId: config-server-1
 
-  #datasource配置
+  #datasource  Configuration
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/uaa_oauth2?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
@@ -25,35 +24,32 @@ spring:
     password: admin
     time-between-eviction-runs-millis: 3600000
 
-  #JPA配置
+  #JPA  Configuration
   jpa:
     database: MYSQL
     show-sql: true
     hibernate:
       ddl-auto: update
 
-  #rabbitmq配置
+  #rabbitmq  Configuration
   rabbitmq:
     host: localhost
     port: 5672
     username: admin
     password: admin
 
-#Eureka配置
+#Eureka Configuration
 eureka:
   instance:
     hostname: localhost
     instance-id: ${server.host}:${server.port}
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
-      #,http://localhost:8762/eureka
+      defaultZone: http://localhost:8762/eureka
 
-#Actuator配置
+# Security/OAuth2 Configuration
+#Actuator Configuration
 management:
-  security:
-    enabled: false
-
   endpoints:
     web:
       exposure:
@@ -64,7 +60,7 @@ management:
     health:
       show-details: always
 
-#日志配置
+#Sl4j  Configuration
 logging:
   level:
     root: error
