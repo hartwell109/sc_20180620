@@ -8,10 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.UUID;
@@ -23,7 +21,7 @@ public class UserBaseController {
     @Resource
     public UserBaseDao userBaseDao;
 
-    @GetMapping(value = "/findbyusername/{username}", produces = "application/txt")
+    @RequestMapping(value = "/findbyusername/{username}")
     public UserBase findByUsername(@PathVariable(name = "username") String username) {
         UserBase userBase = userBaseDao.findByUsername(username);
         log.debug("username={}", username);
@@ -31,8 +29,10 @@ public class UserBaseController {
         return userBase;
     }
 
-    @GetMapping("/findall")
-    public Page<UserBase> findbynocriteria(@PageableDefault(value = 5, size = 5, sort = {"userId"}, direction = Sort.Direction.ASC) Pageable pageable) {
+    @CrossOrigin(value = {"*"})
+    @RequestMapping("/findall")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Page<UserBase> findbynocriteria(@PageableDefault(value = 0, size = 50, sort = {"userId"}, direction = Sort.Direction.ASC) Pageable pageable) {
         Page<UserBase> result = userBaseDao.findAll(pageable);
         return result;
     }
