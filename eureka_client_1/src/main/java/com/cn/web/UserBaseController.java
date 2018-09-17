@@ -3,15 +3,16 @@ package com.cn.web;
 import com.cn.jpa.dao.UserBaseDao;
 import com.cn.jpa.entity.UserBase;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.UUID;
 
 @Slf4j
@@ -29,11 +30,19 @@ public class UserBaseController {
         return userBase;
     }
 
-    @CrossOrigin(value = {"*"})
-    @RequestMapping("/findall")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Page<UserBase> findbynocriteria(@PageableDefault(value = 0, size = 50, sort = {"userId"}, direction = Sort.Direction.ASC) Pageable pageable) {
+    @CrossOrigin
+    @RequestMapping(value = "/findall/{size}/{page}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
+    public Page<UserBase> findByNoCriteria(HttpServletRequest request, @PathVariable("page") int page, @PathVariable("size") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.unsorted());
         Page<UserBase> result = userBaseDao.findAll(pageable);
+        Enumeration<String> requestHeader = request.getHeaderNames();
+        log.debug("------- headers -------");
+        while (requestHeader.hasMoreElements()) {
+            String headerKey = requestHeader.nextElement().toString();
+            //打印所有Header值
+            log.debug("headerKey=" + headerKey + ";value=" + request.getHeader(headerKey));
+        }
         return result;
     }
 

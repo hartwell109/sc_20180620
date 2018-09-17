@@ -32,19 +32,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        HttpMethod.GET,
-                        "/",
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js"
-                )
-                .permitAll()
-                .antMatchers("/oauth/**")
+                        HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js"
+                ).permitAll()
+                .antMatchers("/userbase/**")
+//                .authenticated();
                 .permitAll();
-//                .anyRequest().authenticated();
-        httpSecurity.headers().cacheControl();
     }
 
     @Bean
