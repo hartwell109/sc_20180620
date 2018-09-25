@@ -2,6 +2,7 @@ package com.cn.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -34,10 +35,12 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .withClient("eureka-client")
                 .secret("abcd")
                 .scopes("server")
-                .authorizedGrantTypes("password", "refresh_token")
-                .accessTokenValiditySeconds(3600);
+                .authorizedGrantTypes("refresh_token", "password")
+                .accessTokenValiditySeconds(60 * 60)
+                .refreshTokenValiditySeconds(60 * 60 * 24 * 30);
     }
 
+    @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("12345");

@@ -31,18 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //设置登录,注销，表单登录和Actuator不用拦截，其他请求要拦截
-        http.cors().and()
+        http.cors()
+                .and()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/actuator/**")
-                .permitAll()
+                .antMatchers("/**", "/oauth/**", "/actuator/**").permitAll()
 //                .anyRequest().authenticated()
-
                 .and()
                 .logout().permitAll()
                 .and()
                 .formLogin();
-        //关闭默认的csrf认证
-//        http.csrf().disable();
     }
 
     @Override
